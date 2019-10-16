@@ -1,0 +1,7 @@
+"Alone", "Halsey", "3:25", "Pop"
+"A Luz de Tieta", "Caetano Veloso", "4:26", "MPB"
+"Don't Stop Me Now", "Queen", "3:37", "Rock"
+"Instant Crush", "Daft Punk", "5:39", "House music"
+"Imagination", "Foster The People", "5:39", "Indie Pop"
+"The Pretender", "Foo Fighters", "4:30", "Alternative Rock"
+"Super Fantastico", "Balao Magico", "3:13", "Infantil"
