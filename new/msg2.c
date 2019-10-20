@@ -18,9 +18,48 @@ struct my_msg_st {
     char some_text[MAX_TEXT];
 };
 
+typedef struct musics {
+    char array_music[10][80];
+    char array_author[10][300];
+    char array_duration_time[10][10];
+    char array_genre[10][80];
+} musics;
+
+musics initMusics() {
+    musics all_musics = {
+        {"Alone", "A Luz de Tieta", "Don't Stop Me Now", "Instant Crush", "Imagination", "The Pretender", "Super Fantastico"},
+        {"Halsey", "Caetano Veloso", "Queen", "Daft Punk", "Foster The People", "Foo Fighters", "Balao Magico"},
+        {"3:25", "4:26", "3:37", "5:39", "4:17", "4:30", "3:13"},
+        {"Pop", "MPB", "Rock", "House", "Indie Pop", "Alternative Rock", "Infantil"},
+    };
+
+    return all_musics;
+}
+
+char* accessAuthor(musics all_musics, int index) {
+    char* author = all_musics.array_author[index];
+    return author;
+}
+
+char* accessMusic(musics all_musics, int index) {
+    char* music = all_musics.array_music[index];
+    return music;
+}
+
+char* accessDurationTime(musics all_musics, int index) {
+    char* duration = all_musics.array_duration_time[index];
+    return duration;
+}
+
+char* accessGenre(musics all_musics, int index) {
+    char* genre = all_musics.array_genre[index];
+    return genre;
+}
+
 int main()
 {
     int running = 1;
+    musics all_musics = initMusics();
     struct my_msg_st some_data;
     int msgid;
     char buffer[BUFSIZ];
@@ -33,10 +72,11 @@ int main()
     }
 
     while(running) {
-        printf("Enter some text: ");
-        fgets(buffer, BUFSIZ, stdin);
         some_data.my_msg_type = 1;
-        strcpy(some_data.some_text, buffer);
+        if(musicsIndex > 5){
+           exit(EXIT_SUCCESS);
+        }
+        strcpy(some_data.some_text, all_musics.array_author[musicsIndex]);
 
         if (msgsnd(msgid, (void *)&some_data, MAX_TEXT, 0) == -1) {
             fprintf(stderr, "msgsnd failed\n");
@@ -45,6 +85,7 @@ int main()
         if (strncmp(buffer, "end", 3) == 0) {
             running = 0;
         }
+        musicsIndex++;
     }
 
     exit(EXIT_SUCCESS);
