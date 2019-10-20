@@ -8,8 +8,20 @@
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
+#include <pthread.h>
 
 #include <sys/msg.h>
+
+struct musics {
+    char array_music[10][80] = {"Alone", "A Luz de Tieta", "Don't Stop Me Now", "Instant Crush", "Imagination", "The Pretender", "Super Fantastico"};
+    char array_author[10][80] = {"Halsey", "Caetano Veloso", "Queen", "Daft Punk", "Foster The People", "Foo Fighters", "Balao Magico"};
+    char array_duration_time[10][10] = {"3:25", "4:26", "3:37", "5:39", "4:17", "4:30", "3:13"};
+    char array_genre[10][80] = {"Pop", "MPB", "Rock", "House", "Indie Pop", "Alternative Rock", "Infantil"};
+}
+
+char[] accessMusics(int musicsIndex) {
+    char musicString [200] = {"Autor: ", musics.array_music[musicsIndex]}
+}
 
 #define MAX_TEXT 512
 
@@ -20,6 +32,7 @@ struct my_msg_st {
 
 int main()
 {
+    int musicsIndex = 0;
     int running = 1;
     struct my_msg_st some_data;
     int msgid;
