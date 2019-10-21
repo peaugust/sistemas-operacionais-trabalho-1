@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <pthread.h> 
+#include <semaphore.h>
 
 #include <sys/shm.h>
 
@@ -64,10 +66,18 @@ char* accessGenre(char* music_genre) {
 char* makeMusic(musics all_musics, int index){
     char* music = accessMusic(all_musics.array_music[index]);
     char* author = accessAuthor(all_musics.array_author[index]);
-    char* final_str = (char *) malloc(1 +sizeof(char*) * (strlen(music)+ strlen(author)));
+    char* duration = accessDurationTime(all_musics.array_duration_time[index]);
+    char* genre = accessGenre(all_musics.array_genre[index]);
+    char* final_str = (char *) malloc(1 +sizeof(char*) * (strlen(music)+ strlen(author)+ strlen(duration)+ strlen(genre)));
     strcpy(final_str, music);
     strcat(final_str, author);
+    strcat(final_str, duration);
+    strcat(final_str, genre);
     return final_str;
+}
+
+void sendMusic(struct shared_use_st *shared_stuff, musics all_musics, int musicIndex) {
+     strncpy(shared_stuff->musics, makeMusic(all_musics, musicIndex), TEXT_SZ);
 }
 
 int main()
@@ -77,6 +87,7 @@ int main()
     struct shared_use_st *shared_stuff;
     char buffer[BUFSIZ];
     int shmid;
+    int musicIndex = 0;
     musics all_musics = initMusics();
 
     shmid = shmget((key_t)1234, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
@@ -98,10 +109,11 @@ int main()
     while(running) {
         while(shared_stuff->music_counter == 1) {
             sleep(1);            
-            printf("waiting for client...\n");
+            printf("waiting for client...%d\n", musicIndex);
         }
         
-        strncpy(shared_stuff->musics, makeMusic(all_musics, shared_stuff->music_counter), TEXT_SZ);
+       sendMusic(shared_stuff, all_musics, musicIndex);
+        musicIndex++;
         shared_stuff->music_counter = 1;
 
         if (strncmp(buffer, "end", 3) == 0) {
