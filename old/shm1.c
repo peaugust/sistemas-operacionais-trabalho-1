@@ -103,7 +103,8 @@ int main()
     strcpy(shared_stuff->musics, accessMusic(all_musics, shared_stuff->music_counter));
     while(running) {
         if (shared_stuff->music_counter) {
-            printf("Insere a musica de nome: %s\n", shared_stuff->musics);
+            printf("Insere a musica de nome: %s\n");
+            printf("%s\n", shared_stuff->musics);
             sleep( rand() % 4 ); /* make the other process wait for us ! */
             shared_stuff->music_counter = 0;
             if (strncmp(shared_stuff->musics, "end", 3) == 0) {
