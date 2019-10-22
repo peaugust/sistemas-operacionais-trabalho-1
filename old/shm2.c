@@ -99,12 +99,12 @@ int main()
     int musicIndex = 0;
     musics all_musics = initMusics();
 
-    pthread_create(&tid0, NULL, sendMusic, NULL) ; 
-    pthread_create(&tid1, NULL, sendMusic, NULL) ; 
-    sem_init(&semaphore, 0, 1);
-    pthread_join(tid0,NULL);  
-    pthread_join(tid1,NULL);  
-    sem_destroy(&semaphore);
+    // pthread_create(&tid0, NULL, sendMusic, NULL) ; 
+    // pthread_create(&tid1, NULL, sendMusic, NULL) ; 
+    // sem_init(&semaphore, 0, 1);
+    // pthread_join(tid0,NULL);  
+    // pthread_join(tid1,NULL);  
+    // sem_destroy(&semaphore);
 
     shmid = shmget((key_t)1234, sizeof(struct shared_use_st), 0666 | IPC_CREAT);
 
@@ -128,9 +128,9 @@ int main()
             printf("waiting for client...%d\n", musicIndex);
         }
 
-        sem_wait (&semaphore);
+        // sem_wait (&semaphore);
         sendMusic(shared_stuff, all_musics, musicIndex);
-        sem_post (&semaphore);
+        // sem_post (&semaphore);
         if(musicIndex < 7) {
             musicIndex++;
         } else {
