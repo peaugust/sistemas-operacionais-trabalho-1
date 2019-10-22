@@ -1,6 +1,6 @@
 /* Our first program is a consumer. After the headers the shared memory segment
  (the size of our shared memory structure) is created with a call to shmget,
- with the IPC_CREAT bit specified.  - Consumidor*/
+ with the IPC_CREAT bit specified. */
 
 #include <unistd.h>
 #include <stdlib.h>

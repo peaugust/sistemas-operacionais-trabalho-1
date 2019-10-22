@@ -4,6 +4,6 @@
 
 struct shared_use_st {
     int music_counter;
-    char musics[TEXT_SZ];
+    char musics[100][TEXT_SZ];
 };
 
